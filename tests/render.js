@@ -14,46 +14,78 @@
  * limitations under the License.
  */
 
+/**
+ * This file has been modified by Ru Singh.
+ * Notice in accordance with the Apache 2.0 license.
+ */
+
 const test = require('ava');
 const safeExternalLinksSetup = require('../lib/links');
 
-test('No config', t => {
+test('No config', (t) => {
   const input = '<a href="https://foo.com" rel="banana">Hello World</a>';
   const outputPath = 'file.html';
-  const output = '<a href="https://foo.com" rel="banana noopener">Hello World</a>';
+  const output = '<a href="https://foo.com" rel="banana noopener" target="_blank">Hello World</a>';
   const transformer = safeExternalLinksSetup();
 
   t.is(transformer(input, outputPath), output);
 });
 
-test('No config, no existing rel', t => {
+test('No config, no existing rel', (t) => {
   const input = '<a href="https://foo.com">Hello World</a>';
   const outputPath = 'file.html';
-  const output = '<a href="https://foo.com" rel="noopener">Hello World</a>';
+  const output = '<a href="https://foo.com" target="_blank" rel="noopener">Hello World</a>';
   const transformer = safeExternalLinksSetup();
 
   t.is(transformer(input, outputPath), output);
 });
 
-test('No nothing', t => {
+test('No config, overriding even default options', (t) => {
   const input = '<a href="https://foo.com">Hello World</a>';
   const outputPath = 'file.html';
   const output = '<a href="https://foo.com">Hello World</a>';
-  const transformer = safeExternalLinksSetup({ noopener: false });
+  const transformer = safeExternalLinksSetup({ noopener: false, target: false });
 
   t.is(transformer(input, outputPath), output);
 });
 
-test('Add noreferrer', t => {
+test('Add noreferrer', (t) => {
   const input = '<a href="https://foo.com" rel="banana">Hello World</a>';
   const outputPath = 'file.html';
-  const output = '<a href="https://foo.com" rel="banana noopener noreferrer">Hello World</a>';
+  const output = '<a href="https://foo.com" rel="banana noopener noreferrer" target="_blank">Hello World</a>';
   const transformer = safeExternalLinksSetup({ noreferrer: true });
 
   t.is(transformer(input, outputPath), output);
 });
 
-test('Remove noopener', t => {
+test('Add _blank target to existing noopener links', (t) => {
+  const input = '<a href="https://foo.com" rel="banana noopener">Hello World</a>';
+  const outputPath = 'file.html';
+  const output = '<a href="https://foo.com" rel="banana noopener" target="_blank">Hello World</a>';
+  const transformer = safeExternalLinksSetup({ noopener: false });
+
+  t.is(transformer(input, outputPath), output);
+});
+
+test('Do nothing if _blank target already specified on existing noopener link', (t) => {
+  const input = '<a href="https://foo.com" rel="banana noopener" target="_blank">Hello World</a>';
+  const outputPath = 'file.html';
+  const output = '<a href="https://foo.com" rel="banana noopener" target="_blank">Hello World</a>';
+  const transformer = safeExternalLinksSetup({ noopener: false });
+
+  t.is(transformer(input, outputPath), output);
+});
+
+test('Add _blank target to new noopener links', (t) => {
+  const input = '<a href="https://foo.com" rel="banana">Hello World</a>';
+  const outputPath = 'file.html';
+  const output = '<a href="https://foo.com" rel="banana noopener" target="_blank">Hello World</a>';
+  const transformer = safeExternalLinksSetup();
+
+  t.is(transformer(input, outputPath), output);
+});
+
+test('Remove noopener', (t) => {
   const input = '<a href="https://foo.com" rel="banana">Hello World</a>';
   const outputPath = 'file.html';
   const output = '<a href="https://foo.com" rel="banana">Hello World</a>';
@@ -62,16 +94,16 @@ test('Remove noopener', t => {
   t.is(transformer(input, outputPath), output);
 });
 
-test('Change Pattern', t => {
+test('Change pattern', (t) => {
   const input = '<a href="foo.com" rel="banana">Hello World</a>';
   const outputPath = 'file.html';
-  const output = '<a href="foo.com" rel="banana noopener">Hello World</a>';
+  const output = '<a href="foo.com" rel="banana noopener" target="_blank">Hello World</a>';
   const transformer = safeExternalLinksSetup({ pattern: 'foo.com' });
 
   t.is(transformer(input, outputPath), output);
 });
 
-test('Ignore file excluded from build', t => {
+test('Ignore file excluded from build', (t) => {
   const input = '<body><a href="foo.com" rel="banana">Hello World</a></body>';
   // permalink: false
   const outputPath = false;
@@ -81,7 +113,7 @@ test('Ignore file excluded from build', t => {
   t.is(transformer(input, outputPath), output);
 });
 
-test('Ignore file extension', t => {
+test('Ignore file extension', (t) => {
   const input = '<a href="foo.com" rel="banana">Hello World</a>';
   const outputPath = 'file.md';
   const output = '<a href="foo.com" rel="banana">Hello World</a>';
@@ -90,16 +122,7 @@ test('Ignore file extension', t => {
   t.is(transformer(input, outputPath), output);
 });
 
-test('Has body', t => {
-  const input = '<body><a href="foo.com" rel="banana">Hello World</a></body>';
-  const outputPath = 'file.html';
-  const output = '<html><head></head><body><a href="foo.com" rel="banana">Hello World</a></body></html>';
-  const transformer = safeExternalLinksSetup();
-
-  t.is(transformer(input, outputPath), output);
-});
-
-test('No links', t => {
+test('No links', (t) => {
   const input = '<h1>Hello World</h1>';
   const outputPath = 'file.html';
   const output = '<h1>Hello World</h1>';
