@@ -4,8 +4,6 @@
 
 ## Installing
 
-**TODO**
-
 ```bash
 npm install @hirusi/eleventy-plugin-safe-external-links
 ```
@@ -29,7 +27,7 @@ module.exports = function(eleventyConfig) {
   });
 };
 ```
-## Differences from chromeos/static-site-scaffold-modules/modules/elvventy-plugin-safe-external-links
+## Differences from chromeos/static-site-scaffold-modules/modules/eleventy-plugin-safe-external-links
 
 * This is not a mono-repo. Easier to manage and release updates.
 * Ignores files where `permalink` is set to `false`.
