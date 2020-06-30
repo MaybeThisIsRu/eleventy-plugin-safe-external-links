@@ -1,5 +1,5 @@
 {
-  "name": "eleventy-plugin-safe-external-links",
+  "name": "@hirusi/eleventy-plugin-safe-external-links",
   "version": "0.14.1",
   "description": "Eleventy plugin for ensuring safe external links",
   "keywords": [
@@ -22,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/hirusi/eleventy-plugin-safe-external-links.git"
+    "url": "git+https://github.com/hirusi/eleventy-plugin-safe-external-links.git"
   },
   "bugs": {
     "url": "https://github.com/hirusi/eleventy-plugin-safe-external-links/issues"
@@ -42,5 +42,10 @@
     "eslint-plugin-prettier": "^3.1.4",
     "nyc": "^15.1.0",
     "prettier": "^2.0.5"
-  }
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "author": ""
 }
