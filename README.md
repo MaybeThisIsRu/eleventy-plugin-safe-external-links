@@ -1,5 +1,8 @@
 # Eleventy Plugin Safe External Links
 
+![npm version](https://badge.fury.io/js/%40hirusi%2Feleventy-plugin-safe-external-links.svg)
+![npm downloads](https://img.shields.io/npm/dw/@hirusi/eleventy-plugin-safe-external-links)
+
 [Eleventy plugin](https://www.11ty.dev/docs/plugins/) ensuring that external links always contain `rel="noopener"`, `rel="noreferrer"`, which are [potentially unsafe otherwise](https://web.dev/external-anchors-use-rel-noopener/).
 
 ## Installing
