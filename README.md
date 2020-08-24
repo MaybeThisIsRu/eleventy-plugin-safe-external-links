@@ -33,7 +33,7 @@ module.exports = function (eleventyConfig) {
 }
 ```
 
-Including noreferrer in your external links is optional. Please see [more on this in an article by pointjupiter.com here](https://pointjupiter.com/what-noopener-noreferrer-nofollow-explained/), as pointed out by @grempe. As always, please do your own research as well and make an informed choice. 😊
+Including noreferrer in your external links is optional. Please see [more on this in an article by pointjupiter.com here](https://pointjupiter.com/what-noopener-noreferrer-nofollow-explained/), as pointed out by [@grempe](https://github.com/grempe/). As always, please do your own research as well and make an informed choice. 😊
 
 ## Differences from chromeos/static-site-scaffold-modules/modules/eleventy-plugin-safe-external-links
 
