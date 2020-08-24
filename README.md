@@ -16,20 +16,25 @@ This has only been tested with Eleventy 0.11.0 and would ideally be kept up to d
 ## Usage
 
 ```js
-const pluginLocalRespimg = require('eleventy-plugin-safe-external-links');
+const safeExternalLinks = require("@hirusi/eleventy-plugin-safe-external-links")
 
-module.exports = function(eleventyConfig) {
-  eleventyConfig.addPlugin('safe-external-links', {
-      pattern: 'https{0,1}://', // RegExp pattern for external links
-      noopener: true, // Whether to include noopener
-      noreferrer: false, // Whether to include noreferrer
-      files: [ // What output file extensions to work on
-        '.html'
-      ],
-    },
+module.exports = function (eleventyConfig) {
+
+  eleventyConfig.addPlugin(safeExternalLinks, {
+    pattern: "https{0,1}://", // RegExp pattern for external links
+    noopener: true, // Whether to include noopener
+    noreferrer: false, // Whether to include noreferrer
+    files: [
+      // What output file extensions to work on
+      ".html",
+    ],
   });
-};
+  
+}
 ```
+
+Including noreferrer in your external links is optional. Please see [more on this in an article by pointjupiter.com here](https://pointjupiter.com/what-noopener-noreferrer-nofollow-explained/), as pointed out by @grempe. As always, please do your own research as well and make an informed choice. 😊
+
 ## Differences from chromeos/static-site-scaffold-modules/modules/eleventy-plugin-safe-external-links
 
 * This is not a mono-repo. Easier to manage and release updates.
@@ -38,6 +43,7 @@ module.exports = function(eleventyConfig) {
 * Adds `_blank` target to external links, __unless `noopener` is set to false.__
 * Adds `_blank` target to external links already carrying `noopener` rel __(ignores `noopener` option)__
 * Updated tests.
+* Updated README.
 
 ## Versioning
 
